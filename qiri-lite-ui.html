@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qiri Lite • iOS + Android Interface</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1b1b1b;
+      --surface: #242424;
+      --surface-2: #2e2e2e;
+      --text: #ffffff;
+      --muted: #b7b7b7;
+      --line: #3a3a3a;
+      --brand-a: #8f6bff;
+      --brand-b: #4dcbff;
+      --brand-c: #d665ff;
+      --success: #41d182;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at 20% 0%, #303050 0%, var(--bg) 40%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(27, 27, 27, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, var(--brand-a), var(--brand-b));
+      font-weight: 800;
+    }
+
+    .tag {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .device {
+      background: linear-gradient(180deg, #222 0%, #1a1a1a 100%);
+      border: 1px solid #4a4a4a;
+      border-radius: 40px;
+      padding: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .screen {
+      min-height: 840px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid #000;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr auto;
+    }
+
+    .status,
+    .topbar,
+    .tabs,
+    .bottom {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .status {
+      height: 28px;
+      color: #9e9e9e;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar {
+      padding-top: 8px;
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      white-space: nowrap;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tab.active {
+      color: #fff;
+      border: none;
+      background: linear-gradient(140deg, var(--brand-a), var(--brand-c));
+    }
+
+    .content {
+      padding: 14px 16px 90px;
+      overflow: auto;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .card h3 { margin: 0 0 8px; font-size: 14px; }
+    .card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+    .capture {
+      background: linear-gradient(130deg, #3f2a7a 0%, #274f6d 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .capture .wave {
+      display: flex;
+      gap: 3px;
+      margin: 10px 0;
+      align-items: end;
+      height: 20px;
+    }
+
+    .capture .wave span {
+      width: 3px;
+      border-radius: 3px;
+      background: #fff;
+      opacity: 0.8;
+      animation: pulse 1s infinite ease-in-out;
+    }
+
+    .capture .wave span:nth-child(2){height:16px;animation-delay:.1s}
+    .capture .wave span:nth-child(3){height:10px;animation-delay:.2s}
+    .capture .wave span:nth-child(4){height:18px;animation-delay:.3s}
+    .capture .wave span:nth-child(5){height:12px;animation-delay:.4s}
+    .capture .wave span:nth-child(1){height:8px}
+
+    @keyframes pulse { 50% { transform: scaleY(1.35); opacity: 1; } }
+
+    .knowledge-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .knowledge-table th,
+    .knowledge-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 7px 2px;
+      text-align: left;
+    }
+
+    .knowledge-table th { color: #d9d9d9; font-size: 10px; text-transform: uppercase; letter-spacing: .4px; }
+    .knowledge-table td { color: var(--muted); }
+
+    .search {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #181818;
+      color: #fff;
+      padding: 9px 10px;
+      font-family: inherit;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .twins {
+      display: grid;
+      gap: 8px;
+    }
+
+    .twin {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 10px;
+      background: #202020;
+      font-size: 11px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 5px 8px;
+      border: 1px solid #5e5e5e;
+      color: #d3d3d3;
+      font-size: 10px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      color: #dedede;
+    }
+
+    .history-item small { color: #9f9f9f; }
+
+    .bottom {
+      position: relative;
+      border-top: 1px solid var(--line);
+      background: rgba(27,27,27,0.95);
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 6px;
+      padding-top: 10px;
+      padding-bottom: 14px;
+      font-size: 10px;
+      color: #a8a8a8;
+      text-align: center;
+    }
+
+    .plus {
+      position: absolute;
+      left: 50%;
+      top: -24px;
+      transform: translateX(-50%);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 30px;
+      line-height: 1;
+      background: linear-gradient(150deg, var(--brand-a), var(--brand-c));
+      box-shadow: 0 8px 30px rgba(148, 95, 255, 0.45);
+    }
+
+    .fab-menu {
+      position: absolute;
+      right: 16px;
+      bottom: 72px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #1d1d1d;
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      width: 170px;
+      font-size: 11px;
+      color: #ececec;
+    }
+
+    .fab-menu div {
+      border: 1px solid #404040;
+      border-radius: 9px;
+      padding: 7px 9px;
+      background: #272727;
+    }
+
+    .onboarding {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .step {
+      border: 1px solid #454545;
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 10px;
+      color: #c8c8c8;
+      background: #1f1f1f;
+    }
+
+    .cta {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      background: linear-gradient(140deg, var(--brand-a), var(--brand-b));
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    @media (max-width: 980px) {
+      .board { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-mark">Q</div>
+        <div>
+          Qiri Lite
+          <div class="tag">Mobile interface concept for iOS + Android</div>
+        </div>
+      </div>
+      <div class="pill">Core-only functions from app.qiri.ai workflow</div>
+    </header>
+
+    <section class="board">
+      <article class="device">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>iOS</span></div>
+          <div class="topbar">
+            <h2>Qiri Lite</h2>
+            <span class="pill">Hi, Amara</span>
+          </div>
+          <nav class="tabs">
+            <span class="tab active">Home</span>
+            <span class="tab">My Knowledge</span>
+            <span class="tab">Explore Twins</span>
+            <span class="tab">History</span>
+          </nav>
+          <main class="content">
+            <section class="onboarding">
+              <h3>Onboarding Flow</h3>
+              <div class="steps">
+                <div class="step">1. Welcome + sign in + permissions</div>
+                <div class="step">2. Choose top twins + interests</div>
+                <div class="step">3. Test “Capture thoughts” + done</div>
+              </div>
+              <button class="cta">Start onboarding</button>
+            </section>
+
+            <section class="card capture">
+              <h3>Capture thoughts</h3>
+              <p>Tap to speak. Qiri transcribes and saves directly to My Knowledge.</p>
+              <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+              <p><strong>Live transcript:</strong> “Ideas from my product call should be grouped by priority...”</p>
+              <p style="margin-top:8px;color:#d8ffeb;">Saved to knowledge ✔</p>
+            </section>
+
+            <section class="card">
+              <h3>Session history</h3>
+              <div class="history-item"><span>New Session • Strategy notes</span><small>10m ago</small></div>
+              <div class="history-item"><span>Web Session • app.qiri.ai/article</span><small>2h ago</small></div>
+              <div class="history-item"><span>Group Session • Marketing team</span><small>Yesterday</small></div>
+            </section>
+
+            <section class="card">
+              <h3>My Knowledge</h3>
+              <input class="search" placeholder="Search files, notes, transcripts" />
+              <table class="knowledge-table">
+                <thead><tr><th>File</th><th>Type</th><th>Updated</th></tr></thead>
+                <tbody>
+                  <tr><td>Roadmap_2026.pdf</td><td>PDF</td><td>Today</td></tr>
+                  <tr><td>Sales call transcript</td><td>Voice</td><td>Today</td></tr>
+                  <tr><td>Twin brief - Investor</td><td>Doc</td><td>2d</td></tr>
+                  <tr><td>Pricing analysis.csv</td><td>Sheet</td><td>5d</td></tr>
+                </tbody>
+              </table>
+            </section>
+          </main>
+          <footer class="bottom">
+            <div>Home</div>
+            <div>Knowledge</div>
+            <button class="plus">+</button>
+            <div>Twins</div>
+            <div>History</div>
+            <div class="fab-menu">
+              <div>+ New session</div>
+              <div>+ Web session</div>
+              <div>+ Group session</div>
+            </div>
+          </footer>
+        </div>
+      </article>
+
+      <article class="device">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>Android</span></div>
+          <div class="topbar">
+            <h2>Explore Twins</h2>
+            <span class="pill">Marketplace</span>
+          </div>
+          <nav class="tabs">
+            <span class="tab">Home</span>
+            <span class="tab active">Explore Twins</span>
+            <span class="tab">Group Sessions</span>
+          </nav>
+          <main class="content">
+            <section class="card">
+              <h3>Twin marketplace</h3>
+              <input class="search" placeholder="Search twins by skill, industry, role" />
+              <div class="twins">
+                <div class="twin"><span>Growth Strategist Twin</span><span class="chip">Start session</span></div>
+                <div class="twin"><span>Legal Analyst Twin</span><span class="chip">Start session</span></div>
+                <div class="twin"><span>Engineering Lead Twin</span><span class="chip">Start session</span></div>
+                <div class="twin"><span>Investor Pitch Coach Twin</span><span class="chip">Start session</span></div>
+                <div class="twin"><span>Healthcare GTM Twin</span><span class="chip">Start session</span></div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h3>Group sessions</h3>
+              <p>Create collaborative sessions with teammates and assigned twins, while advanced admin controls stay on desktop.</p>
+            </section>
+
+            <section class="card">
+              <h3>Desktop-only functions</h3>
+              <p>Publishing twins, detailed analytics, deep workspace settings, and full admin tools are intentionally desktop-only in Qiri Lite.</p>
+            </section>
+          </main>
+          <footer class="bottom">
+            <div>Home</div>
+            <div>Knowledge</div>
+            <button class="plus">+</button>
+            <div>Twins</div>
+            <div>History</div>
+          </footer>
+        </div>
+      </article>
+    </section>
+  </div>
+</body>
+</html>
